@@ -1,6 +1,7 @@
 package com.example.plannerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
@@ -13,14 +14,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class CategoryDetailActivity extends AppCompatActivity {
 
+    private RecyclerView.Adapter adapter;
+    ArrayList<CategoryList> categoryList = new ArrayList<>();
     private TextView textView_countdowntimer;
     private TextView textView_taskName, textView_duration;
-    private Button button_start_pause, button_reset;
+    private Button button_start_pause, button_reset, editDurationBtn;
     private CountDownTimer mCountDownTimer;
     private CategoryList object;
     private boolean mTimerRunning;
@@ -33,6 +38,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
         initView();
         getBundle();
+        adapter = new CategoryAdapter(categoryList);
 
         button_start_pause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +58,30 @@ public class CategoryDetailActivity extends AppCompatActivity {
             }
         });
 
+        editDurationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int mTextView_duration = Integer.parseInt(textView_duration.getText().toString());
+                if (mTextView_duration > 0) {
+                    object.setDuration(mTextView_duration);
+                    adapter.notifyDataSetChanged();
+                    if (mTimerRunning) {
+                        mTimeLeftInMillis = object.getDuration() * 60000L;
+                        mCountDownTimer.cancel();
+                        updateCountDownText();
+                        startTimer();
+                    }else{
+                        mTimeLeftInMillis = object.getDuration() * 60000L;
+                        updateCountDownText();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "Number should be bigger than 0", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         updateCountDownText();
+
     }
 
     private void startTimer() {
@@ -113,5 +142,6 @@ public class CategoryDetailActivity extends AppCompatActivity {
         textView_countdowntimer = findViewById(R.id.textView_countdowntimer);
         textView_duration = findViewById(R.id.textView_duration);
         textView_taskName = findViewById(R.id.textView_taskName);
+        editDurationBtn = findViewById(R.id.editDurationBtn);
     }
 }

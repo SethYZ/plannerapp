@@ -3,4 +3,8 @@
     <string name="get_started">Get Started</string>
     <string name="new_task">New Task</string>
     <string name="my_task">My Task</string>
+    <string name="creating_new_task">Create New Task</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_duration">Duration</string>
+
 </resources>

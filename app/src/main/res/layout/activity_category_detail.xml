@@ -89,7 +89,7 @@
                     tools:visibility="visible" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/editDurationBtn"
                     android:layout_width="83dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="28dp"

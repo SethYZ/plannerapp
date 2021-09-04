@@ -30,6 +30,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         holder.categoryTitle.setText(categoryList.get(position).getTitle());
         holder.categoryDuration.setText(categoryList.get(position).getDuration() + " minutes");
 
